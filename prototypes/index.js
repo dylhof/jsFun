@@ -23,17 +23,23 @@ const kittyPrompts = {
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.filter((kitty) => {
+        return kitty.color === 'orange';
+    }).map((orangeKitty) => {
+        return orangeKitty.name;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This question is asking for an array of just names of orange kitties.  So because it is asking for an array that is smaller than the original array (just the orange kitties), I started with filter.  From there it is asking for just the names, so I chained map onto the filter method to return just an array with names. 
   },
 
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.sort((cat1, cat2) => {
+  return cat1.age - cat2.age;
+});
     return result;
 
     // Annotation:
@@ -122,7 +128,9 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = mods.map((mod) => {
+        return { mod: mod.mod, studentsPerInstructor: mod.students/ mod.instructors }
+    });
     return result;
 
     // Annotation:
