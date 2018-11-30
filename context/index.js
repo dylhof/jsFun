@@ -90,7 +90,7 @@ const context = {
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment
+    // Fn is an Es 6 arrow function which binds the value of 'this' upon declaration and in this case there is no object to bind 'this' to as it is an annon func created within the global window object. 
   },
 
   exerciseF() {
@@ -109,11 +109,11 @@ const context = {
     const storm = new Hero('Ororo', 'weather control', true);
 
     // What is the value of `this` when we call storm.identifyHero()?
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'instance of Hero';
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment
+    // Here we are using the new key word to instanciate storm from our class of Hero.  That means that when storm (our new instance of hero) invokes identifyHero using dot notation, storm is what is bound to 'this'. 
   },
 
   exerciseG() {
@@ -137,11 +137,11 @@ const context = {
 
 
     // What is the value of `this` when we call monopoly.restart()?
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'global window object';
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment
+    // 'This' is bound to the global window object because it is in a ES5 function definition nested within the restart method.  As a ES5 function, 'this' is bound upon invocation and since it is nested, it is the function above it which is invoking it, meaning that it has no normal object to bind to, so it defaults to the global window object. 
   },
 
   exerciseH() {
@@ -157,11 +157,11 @@ const context = {
     obj.method();
 
     // What is the value of `this` when we call obj.arrowFunction()?
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'obj';
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment
+    // While 'this' lives within a nested function, it is an ES 6 arrow function which means that 'this' binds upon declaration.  Since it is declared within an object, it is bound to that object (obj).
   },
 
   exerciseI() {  
@@ -180,11 +180,11 @@ const context = {
     }, poets);
 
     // What is the value of `this` that gets returned on each iteration of poets.map()?
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'poets';
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment. Annotation should include explanation regarding the second argument of `poets` that is being passed
+    // Iterator array prototype methods like map take a second, optional argument (thisarg) which defines the connection to 'this' within the callback function.  So when poets.map() is invoked, it returns the entire array of poets (the value of 'this'), because poets is passed as that second thisarg. 
   },
 
   exerciseJ() {
@@ -198,7 +198,7 @@ const context = {
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment.
+    // when a user clicks on the button 'el', the click triggers the annon function to run. Because el was the object which used the on method to trigger that function, el is bound to 'this'
   },
 
   exerciseK() {
@@ -212,18 +212,8 @@ const context = {
     return result;
 
     // Annotation: 
-    // Write your annotation here as a comment.
+    // Because this 
   }
-
-
-
-
-
-
-
-
-
-
 
 };
 

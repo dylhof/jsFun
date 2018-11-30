@@ -38,12 +38,12 @@ const kittyPrompts = {
     // Sort the kitties by their age
 
     const result = kitties.sort((cat1, cat2) => {
-  return cat1.age - cat2.age;
+  return cat2.age - cat1.age;
 });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // this prompt was asking to sort the kitties by their age so I used the sort prototype. 
   },
 
   growUp() {
@@ -60,8 +60,13 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.map((kitty) => {
+        return {name: kitty.name, age: kitty.age + 2, color: kitty.color};
+    });
     return result;
+  //Annotation:
+  //this prompt was asking for an array with the data mutated by adding two to the kitties ages.  Because it is asking for an array of the same length but with the data changed, I used the map function to create an array of objects with the ages updated by adding 2. 
+
   }
 };
 
@@ -92,7 +97,16 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = clubs.reduce((acc, club) => {
+  club.members.forEach((member) => {
+    if (!acc[member]) {
+      acc[member] = [club.club];
+    } else {
+      acc[member].push(club.club);
+        }
+    })
+    return acc
+    }, {});
     return result;
 
     // Annotation:
@@ -165,11 +179,13 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map((cake) => {
+      return {flavor: cake.cakeFlavor, inStock: cake.inStock};
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // Because this prompt was asking us for an array of objects that just had the flavor of the cake and how much was in stock, implying an array of the same length as the original but with each object mutated to display less data, I chose to use the map array prototype. 
   },
 
   onlyInStock() {
@@ -193,22 +209,27 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter((cake) => {
+      return cake.inStock > 0;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This prompt was asking for a subset of the cakes including only the cakes that are in stock.  The filter array prototype was able to return only those cakes that had some cakes in stock. 
   },
   
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((numCakes, cake) => {
+  numCakes += cake.inStock;
+  return numCakes;
+}, 0);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This prompt was asking for a single sum to be returned from all the cakes inStock.  To me this means that I need to use the reduce array prototype method. 
   },
 
   allToppings() {
@@ -216,11 +237,18 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((topArr, cake) => {
+  cake.toppings.forEach((topping) => {
+    if (!topArr.includes(topping)) {
+      topArr.push(topping)
+    }
+  });
+  return topArr;
+}, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // because this prompt was asking for just one array of strings, I used the reduce method.  Inside of the reduce array prototype method, I needed to iterate over each array of toppings and check if they were already included in my new topping array.  if they were not, I added them using the push array prototype method. 
   },
 
   groceryList() {
@@ -234,11 +262,19 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((groceryList, cake) => {
+     cake.toppings.forEach((topping) => {  
+        if (!groceryList[topping]) {
+          groceryList[topping] = 0;
+        };
+        groceryList[topping]++;
+        });
+     return groceryList;
+    }, {});;
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This prompt was asking for a single object to be returned with keys that were unique toppings and the value being how often that topping appeared in the dataset as a whole.  This indicated that reduce would be a good method to use.  from there I needed to iterate over each topping to check if it was already a key so I used the forEach array prototype method to check each toppings array.  If it was not a key, I added it and assigned it a value of 0, then incremented the topping number.  If it was a key, the topping number was incremented up by one. 
   }
 };
 
@@ -269,11 +305,13 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter((room) => {
+      return room.program === 'FE';
+    });;
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This prompt was asking for a subset of the classrooms array of objects so I used the filter array prototype method. 
   },
 
   totalCapacities() {
@@ -284,21 +322,39 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((roomCapObj, room) => {
+  let feCap = roomCapObj.feCapacity;
+  let beCap = roomCapObj.beCapacity;
+  if (room.program === 'FE') {
+    feCap += room.capacity;
+  }; 
+  if (room.program === 'BE') {
+    beCap += room.capacity
+  };
+  return {
+    feCapacity: feCap,
+    beCapacity: beCap
+  };
+}, {
+  feCapacity: 0,
+  beCapacity: 0
+});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // because this prompt was asking for a single object from the array of classroom objects and that single object is different from any of the objects in the array, I chose to use reduce to return a new object with an initialized object that had the room capacities as key/value pairs.  from there I used a conditional to sort the FE fooms from the BE rooms and added the current room's capacity to the total, eventually returning the new object. 
   },
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((roomA, roomB) => {
+  return roomA.capacity - roomB.capacity;
+});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This one wanted me to sort the current array by their capacity so I used the sort array prototype method. 
   }
 };
 
@@ -324,11 +380,14 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((numOfBeers, brewery) => {
+  numOfBeers += brewery.beers.length;
+return numOfBeers
+}, 0);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This prompt wanted a single number back from all of the brewery object's beers arrays so I chose reduce to return a single number back.  I then added used the .length property to add the length of each brewery's beers array to get the total number of beers on offer. yum. so many delicious beers. 
   },
 
   getBreweryBeerCount() {
@@ -340,11 +399,13 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map((brewery) => {
+  return {name: brewery.name, beerCount: brewery.beers.length}
+});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // This prompt is asking for a new array of all the brewery objects in the current breweries but with each object modified to include only the name and a count of the beers they offer. Because it was askking for an array of the same length as the original array, I chose the map array prototype method. 
   },
 
   findHighestAbvBeer() {
@@ -352,11 +413,21 @@ const breweryPrompts = {
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((beer, brewery) => {
+  let highABV = beer.abv;
+  let highABVBeer = beer;
+  brewery.beers.forEach((curBeer) => {
+   if (highABV < curBeer.abv) {
+     highABV = curBeer.abv;
+     highABVBeer = curBeer;
+   };
+  });
+  return highABVBeer
+}, {abv: 0});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // because this was asking for a single object back, I chose the reduce array prototype method.  After declaring several initial variables and values to describe the highest ABV and the beer that belonged to that ABV, I iterated through all the beers to compare their ABV to the current value of those variables and update the variables if their ABV is higher. Then returning the beer with the highest ABV at the end. 
   }
 };
 
@@ -400,7 +471,19 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    //map over instructors array
+    //find the matching cohort for our current instructor 
+    //grab the student count value from the matching cohort
+    //return an object with the instructor name and student count value as properties
+
+    const result = instructors.map((instructor) => {
+        let matchingCohort = cohorts.find((cohort) => {
+          return cohort.module === instructor.module
+        });
+        let numOfStudents = matchingCohort.studentCount;
+        return { name: instructor.name, studentCount: numOfStudents }
+    });
+
     return result;
 
     // Annotation:
@@ -414,7 +497,14 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((stuPerTeachObj, cohort) => {
+    let numStudents = cohort.studentCount;
+    let numTeachers = instructors.filter((teacher) => {
+      return teacher.module === cohort.module
+    }).length;
+    stuPerTeachObj[`cohort${cohort.cohort}`] = numStudents/numTeachers;
+    return stuPerTeachObj
+    }, {});
     return result;
 
     // Annotation:
@@ -431,7 +521,18 @@ const turingPrompts = {
     //   Pam: [2, 4]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = iinstructors.reduce((teachersObj, teacher) => {
+      let teacherName = teachersObj[teacher.name] = [];
+      teacher.teaches.forEach((subject) => {
+        cohorts.forEach((cohort) => {
+          if (cohort.curriculum.includes(subject) && !teacherName.includes(cohort.module)) {
+            teacherName.push(cohort.module)
+          }
+        })
+      })
+    return teachersObj;
+    }, {});
+
     return result;
 
     // Annotation:
